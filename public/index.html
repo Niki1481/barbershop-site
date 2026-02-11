@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Барбершоп — онлайн запись</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script src="https://widget.cloudpayments.ru/bundles/cloudpayments.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <div class="hero">
+      <div>
+        <h1 id="shopName">Барбершоп</h1>
+        <p id="shopTagline" class="muted">Онлайн запись 24/7: выберите услугу, мастера, время и оплатите.</p>
+        <div class="badges">
+          <span class="badge">Онлайн запись</span>
+          <span class="badge">Оплата CloudPayments</span>
+          <span class="badge">Отмена по коду</span>
+        </div>
+      </div>
+      <div class="card mini">
+        <div class="miniTitle">Контакты</div>
+        <div id="shopContacts" class="miniBody muted">Добавите адрес/телефон в настройках.</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card" id="statusCard" hidden></section>
+
+    <section class="card">
+      <h2>Записаться</h2>
+
+      <div class="grid">
+        <label>
+          <div class="label">Услуга</div>
+          <select id="serviceSelect"></select>
+        </label>
+
+        <label>
+          <div class="label">Мастер</div>
+          <select id="barberSelect"></select>
+        </label>
+
+        <label>
+          <div class="label">Дата</div>
+          <input id="dateInput" type="date" />
+        </label>
+      </div>
+
+      <div class="subhead">Свободное время</div>
+      <div id="slots" class="slots muted">Выберите услугу, мастера и дату…</div>
+
+      <hr />
+
+      <form id="bookForm" class="grid2">
+        <label>
+          <div class="label">Имя</div>
+          <input id="nameInput" required placeholder="Иван" />
+        </label>
+        <label>
+          <div class="label">Телефон</div>
+          <input id="phoneInput" required placeholder="+7 9..." />
+        </label>
+        <label class="full">
+          <div class="label">Email (необязательно)</div>
+          <input id="emailInput" type="email" placeholder="you@email.com" />
+        </label>
+
+        <div class="full">
+          <button class="btn" type="submit" id="payBtn" disabled>Выберите время выше</button>
+          <div class="hint muted">
+            После оплаты вы получите <b>код отмены</b> — сохраните его.
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Отменить запись</h2>
+      <p class="muted">Введите код отмены, который вы увидели после оплаты.</p>
+      <form id="cancelForm" class="grid2">
+        <label class="full">
+          <div class="label">Код отмены</div>
+          <input id="cancelTokenInput" required placeholder="например: 9f2d7a8c..." />
+        </label>
+        <div class="full">
+          <button class="btn secondary" type="submit">Отменить запись</button>
+        </div>
+      </form>
+      <div class="muted small">
+        В этой версии код показывается на странице успеха. Если хотите — можно добавить отправку кода на email/SMS (обычно это уже платные сервисы).
+      </div>
+    </section>
+
+    <section class="card" id="servicesCard">
+      <h2>Услуги</h2>
+      <div id="servicesList" class="list"></div>
+    </section>
+
+    <section class="card" id="barbersCard">
+      <h2>Мастера</h2>
+      <div id="barbersList" class="people"></div>
+      <div class="muted small">Фото мастеров можно добавить позже: достаточно указать ссылку на изображение в базе (поле <code>photo_url</code>).</div>
+    </section>
+
+    <section class="card">
+      <h2>Наши работы</h2>
+      <div class="gallery" id="galleryGrid">
+        <div class="ph"></div><div class="ph"></div><div class="ph"></div>
+        <div class="ph"></div><div class="ph"></div><div class="ph"></div>
+      </div>
+      <div class="muted small">Здесь будут ваши фото. Позже можно подключить загрузку в Cloudflare R2 (тоже можно начать бесплатно), но для старта проще вставить готовые ссылки на картинки.</div>
+    </section>
+
+    <section class="card">
+      <h2>Отзывы</h2>
+      <div class="reviews">
+        <div class="review">“Отличный сервис и атмосфера. Вернусь снова!” <span class="muted">— Клиент</span></div>
+        <div class="review">“Мастер попал в точку, стрижка 🔥” <span class="muted">— Клиент</span></div>
+        <div class="review">“Удобная онлайн-запись, всё быстро и понятно.” <span class="muted">— Клиент</span></div>
+      </div>
+      <div class="muted small">Потом можно заменить на реальные отзывы (вручную в коде или хранить в базе).</div>
+    </section>
+
+    <footer class="muted small center">
+      <div>© <span id="year"></span> <span id="shopName2">Барбершоп</span></div>
+      <div class="small">Сайт работает на Cloudflare Pages + D1 (serverless).</div>
+    </footer>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
